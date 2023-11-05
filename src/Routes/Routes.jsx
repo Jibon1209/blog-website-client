@@ -4,6 +4,7 @@ import NotFound from "../Components/NotFound";
 import Home from "../Components/Home/Home";
 import SignIn from "../Components/SignIn/SignIn";
 import SignUp from "../Components/SignUp/SignUp";
+import AddBlog from "../Components/Add Blog/AddBlog";
 
 const router = createBrowserRouter([
   {
@@ -16,14 +17,18 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/signin",
-        element: <SignIn />,
-      },
-      {
-        path: "/signup",
-        element: <SignUp />,
+        path: "/addBlog",
+        element: <AddBlog />,
       },
     ],
+  },
+  {
+    path: "/signin",
+    element: <SignIn />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
   },
 ]);
 export default router;
