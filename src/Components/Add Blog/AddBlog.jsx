@@ -30,7 +30,6 @@ const AddBlog = () => {
       author,
     };
     axios.post(`${BASE_URL}/blogs`, newBlogs).then((res) => {
-      console.log(res.data);
       if (res.data.insertedId) {
         toast.success("Blog added successfully");
         resetForm();
