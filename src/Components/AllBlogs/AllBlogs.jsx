@@ -17,7 +17,6 @@ const AllBlogs = () => {
   const numberOfPages = Math.ceil(count / itemsPerPage);
   const pages = [...Array(numberOfPages).keys()];
 
-  console.log(pages);
   const { isLoading, error } = useQuery({
     queryKey: ["blogs", currentPage, itemsPerPage],
 
@@ -34,7 +33,6 @@ const AllBlogs = () => {
 
       setCount(countRes.data.count);
       setBlogs(blogsRes.data);
-      console.log(blogsRes.data);
       return blogsRes.data;
     },
   });
@@ -64,7 +62,7 @@ const AllBlogs = () => {
     const selectCategory = document.getElementById("category");
     const category = selectCategory.value;
     if (category) {
-      axios.get(`${BASE_URL}/blogs/${category}`).then((res) => {
+      axios.get(`${BASE_URL}/srccategory/blogs/${category}`).then((res) => {
         setBlogs(res.data);
       });
     } else {

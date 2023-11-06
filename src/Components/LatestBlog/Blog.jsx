@@ -13,7 +13,7 @@ const Blog = ({ blog }) => {
         {shortDescription}
       </p>
       <div className="flex justify-center items-center gap-6">
-        <Link>
+        <Link to={`/blogDetails/${_id}`}>
           <Button className="bg-accent hover:bg-accentDark font-bold">
             Details
           </Button>

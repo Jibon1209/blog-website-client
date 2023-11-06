@@ -7,6 +7,9 @@ import SignUp from "../Components/SignUp/SignUp";
 import AddBlog from "../Components/Add Blog/AddBlog";
 import PrivetRoute from "./PrivetRoute";
 import AllBlogs from "../Components/AllBlogs/AllBlogs";
+import BlogDetails from "../Components/LatestBlog/BlogDetails";
+import { BASE_URL } from "../Components/utils/utils";
+import UpdateBlogs from "../Components/Add Blog/UpdateBlogs";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +36,24 @@ const router = createBrowserRouter([
             <AllBlogs />
           </PrivetRoute>
         ),
+      },
+      {
+        path: "/blogDetails/:id",
+        element: (
+          <PrivetRoute>
+            <BlogDetails />
+          </PrivetRoute>
+        ),
+        loader: ({ params }) => fetch(`${BASE_URL}/blogs/${params.id}`),
+      },
+      {
+        path: "/blogsEdit/:id",
+        element: (
+          <PrivetRoute>
+            <UpdateBlogs />
+          </PrivetRoute>
+        ),
+        loader: ({ params }) => fetch(`${BASE_URL}/blogs/${params.id}`),
       },
     ],
   },
