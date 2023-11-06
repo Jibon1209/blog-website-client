@@ -1,10 +1,12 @@
-import { Button, Label, Textarea } from "flowbite-react";
+import { Button, Label, Spinner, Textarea } from "flowbite-react";
 import { useContext } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 import axios from "axios";
 import { BASE_URL } from "../utils/utils";
 import { toast } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
+import Comment from "../Comment/Comment";
 
 const BlogDetails = () => {
   const { user } = useContext(AuthContext);
@@ -14,6 +16,7 @@ const BlogDetails = () => {
 
   const { _id, title, image, shortDescription, longDescription, author } =
     useLoaderData();
+
   const resetForm = () => {
     document.getElementById("commentForm").reset();
   };
@@ -23,7 +26,6 @@ const BlogDetails = () => {
     const blogId = _id;
     const comment = form.get("comment");
     const newComment = { blogId, userName, userPhoto, comment };
-    console.log(newComment);
     axios.post(`${BASE_URL}/comments`, newComment).then((res) => {
       if (res.data.insertedId) {
         toast.success("Comment successfully");
@@ -31,6 +33,25 @@ const BlogDetails = () => {
       }
     });
   };
+  const {
+    isLoading,
+    error,
+    data: comments,
+  } = useQuery({
+    queryKey: ["comments", _id],
+    queryFn: async () => {
+      const res = await axios.get(`${BASE_URL}/comments?blogId=${_id}`);
+      console.log(res.data);
+      return res.data;
+    },
+  });
+  if (isLoading) {
+    return <Spinner color="info" aria-label="Info spinner example" />;
+  }
+  if (error) {
+    return toast.error(`Something went wrong with ${error.message}`);
+  }
+
   return (
     <div className="mt-20 px-4">
       <h1 className="text-base px-4 md:text-3xl lg:text-4xl font-bold  text-center">
@@ -88,6 +109,14 @@ const BlogDetails = () => {
             </div>
           </form>
         )}
+      </div>
+      <div className="mt-10 md:w-1/2 items-center mx-auto">
+        <h1 className="text-3xl font-semibold ml-2">Comments</h1>
+        <div className="flex flex-col rounded-xl mt-4 border-2 p-4 gap-4">
+          {comments.map((comment) => (
+            <Comment key={comment._id} comment={comment}></Comment>
+          ))}
+        </div>
       </div>
     </div>
   );
