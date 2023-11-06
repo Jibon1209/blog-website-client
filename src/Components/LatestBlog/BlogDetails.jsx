@@ -2,20 +2,35 @@ import { Button, Label, Textarea } from "flowbite-react";
 import { useContext } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
+import axios from "axios";
+import { BASE_URL } from "../utils/utils";
+import { toast } from "react-toastify";
 
 const BlogDetails = () => {
   const { user } = useContext(AuthContext);
   const currentUser = user.email;
+  const userPhoto = user?.photoURL;
+  const userName = user?.displayName;
 
-  const {
-    _id,
-    title,
-    image,
-    category,
-    shortDescription,
-    longDescription,
-    author,
-  } = useLoaderData();
+  const { _id, title, image, shortDescription, longDescription, author } =
+    useLoaderData();
+  const resetForm = () => {
+    document.getElementById("commentForm").reset();
+  };
+  const handleComment = (e) => {
+    e.preventDefault();
+    const form = new FormData(e.currentTarget);
+    const blogId = _id;
+    const comment = form.get("comment");
+    const newComment = { blogId, userName, userPhoto, comment };
+    console.log(newComment);
+    axios.post(`${BASE_URL}/comments`, newComment).then((res) => {
+      if (res.data.insertedId) {
+        toast.success("Comment successfully");
+        resetForm();
+      }
+    });
+  };
   return (
     <div className="mt-20 px-4">
       <h1 className="text-base px-4 md:text-3xl lg:text-4xl font-bold  text-center">
@@ -50,7 +65,7 @@ const BlogDetails = () => {
             </Link>
           </>
         ) : (
-          <form>
+          <form id="commentForm" onSubmit={handleComment}>
             <div className="max-w-md items-center mx-auto mt-10">
               <div className="mb-2 block">
                 <Label className="font-bold" value="Your message" />
