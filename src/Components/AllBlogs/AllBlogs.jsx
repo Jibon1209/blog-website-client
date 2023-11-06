@@ -3,7 +3,7 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { BASE_URL } from "../utils/utils";
-import { Button, Pagination, Select, Spinner, TextInput } from "flowbite-react";
+import { Button, Select, Spinner, TextInput } from "flowbite-react";
 import { toast } from "react-toastify";
 import Blog from "../LatestBlog/Blog";
 
@@ -59,6 +59,49 @@ const AllBlogs = () => {
       setCurrentPage(currentPage + 1);
     }
   };
+  const handleCategorySearch = (e) => {
+    e.preventDefault();
+    const selectCategory = document.getElementById("category");
+    const category = selectCategory.value;
+    if (category) {
+      axios.get(`${BASE_URL}/blogs/${category}`).then((res) => {
+        setBlogs(res.data);
+      });
+    } else {
+      axios
+        .get(
+          `${BASE_URL}/all/blogs?email=${currentUser}&page=${currentPage}&size=${itemsPerPage}`,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          setBlogs(res.data);
+        });
+    }
+  };
+  const handleTitleSearch = (e) => {
+    e.preventDefault();
+    const val = document.getElementById("title");
+    const title = val.value;
+    console.log(title);
+    if (title) {
+      axios.get(`${BASE_URL}/search/blogs/${title}`).then((res) => {
+        setBlogs(res.data);
+      });
+    } else {
+      axios
+        .get(
+          `${BASE_URL}/all/blogs?email=${currentUser}&page=${currentPage}&size=${itemsPerPage}`,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          setBlogs(res.data);
+        });
+    }
+  };
   return (
     <div className="mt-20 px-4">
       <h1 className="text-3xl px-4 md:text-5xl font-bold  text-center">
@@ -68,7 +111,7 @@ const AllBlogs = () => {
         <div className="flex gap-2">
           <div className="w-[300px]">
             <Select id="category" required>
-              <option>Select category</option>
+              <option value="">Select category</option>
               <option value="Fashion">Fashion</option>
               <option value="Fitness">Fitness</option>
               <option value="Food">Food</option>
@@ -78,17 +121,31 @@ const AllBlogs = () => {
             </Select>
           </div>
           <div>
-            <Button className="bg-accent hover:bg-accentDark" size="sm">
+            <Button
+              onClick={handleCategorySearch}
+              className="bg-accent hover:bg-accentDark"
+              size="sm"
+            >
               Search
             </Button>
           </div>
         </div>
         <div className="flex gap-2">
           <div className="w-[300px]">
-            <TextInput type="text" name="title" placeholder="Title" required />
+            <TextInput
+              id="title"
+              type="text"
+              name="title"
+              placeholder="Title"
+              required
+            />
           </div>
           <div>
-            <Button className="bg-accent hover:bg-accentDark" size="sm">
+            <Button
+              onClick={handleTitleSearch}
+              className="bg-accent hover:bg-accentDark"
+              size="sm"
+            >
               Search
             </Button>
           </div>
