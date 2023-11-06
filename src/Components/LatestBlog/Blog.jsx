@@ -1,5 +1,6 @@
 import { Button, Card } from "flowbite-react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const Blog = ({ blog }) => {
   const { _id, title, image, shortDescription } = blog;
@@ -26,5 +27,7 @@ const Blog = ({ blog }) => {
     </Card>
   );
 };
-
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+};
 export default Blog;

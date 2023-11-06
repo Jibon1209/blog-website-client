@@ -1,22 +1,23 @@
-import PropTypes from 'prop-types';
-import { useContext } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { AuthContext } from '../Providers/AuthProvider';
+import PropTypes from "prop-types";
+import { useContext } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { AuthContext } from "../Providers/AuthProvider";
+import { Spinner } from "flowbite-react";
 
 const PrivetRoute = ({ children }) => {
-    const { user, loading } = useContext(AuthContext);
-    const location = useLocation();
+  const { user, loading } = useContext(AuthContext);
+  const location = useLocation();
 
-    if (loading) {
-        return <span className="loading loading-infinity loading-lg"></span>;
-    }
-    if (user) {
-        return children;
-    }
+  if (loading) {
+    return <Spinner color="info" aria-label="Info spinner example" />;
+  }
+  if (user) {
+    return children;
+  }
 
-    return <Navigate state={location.pathname} to='/signin'></Navigate>;
-}
+  return <Navigate state={location.pathname} to="/signin"></Navigate>;
+};
 PrivetRoute.propTypes = {
-    children: PropTypes.node
-}
+  children: PropTypes.node,
+};
 export default PrivetRoute;

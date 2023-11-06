@@ -5,6 +5,8 @@ import Home from "../Components/Home/Home";
 import SignIn from "../Components/SignIn/SignIn";
 import SignUp from "../Components/SignUp/SignUp";
 import AddBlog from "../Components/Add Blog/AddBlog";
+import PrivetRoute from "./PrivetRoute";
+import AllBlogs from "../Components/AllBlogs/AllBlogs";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +20,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/addBlog",
-        element: <AddBlog />,
+        element: (
+          <PrivetRoute>
+            <AddBlog />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/allBlogs",
+        element: (
+          <PrivetRoute>
+            <AllBlogs />
+          </PrivetRoute>
+        ),
       },
     ],
   },
