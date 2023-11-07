@@ -16,7 +16,7 @@ const SignIn = () => {
     const form = new FormData(e.currentTarget);
     const email = form.get("email");
     const password = form.get("password");
-    console.log(email, password);
+
     signIn(email, password)
       .then((result) => {
         const user = {
@@ -24,7 +24,6 @@ const SignIn = () => {
           lastLoggedAt: result.user.metadata?.lastSignInTime,
         };
         axios.patch(`${BASE_URL}/users`, user).then((res) => {
-          console.log(res.data);
           if (res.data.acknowledged) {
             toast.success("Sign In successfully");
           }
@@ -55,7 +54,6 @@ const SignIn = () => {
           lastLoggedAt,
         };
         axios.patch(`${BASE_URL}/users`, userinfo).then((res) => {
-          console.log(res.data);
           if (res.data.acknowledged) {
             toast.success("Sign In successfully");
           }

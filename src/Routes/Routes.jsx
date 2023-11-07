@@ -11,12 +11,13 @@ import BlogDetails from "../Components/LatestBlog/BlogDetails";
 import { BASE_URL } from "../Components/utils/utils";
 import UpdateBlogs from "../Components/Add Blog/UpdateBlogs";
 import FeaturedBlogs from "../Components/FeaturedBlogs/FeaturedBlogs";
+import Wishlist from "../Components/Wishlist/Wishlist";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    //errorElement: <NotFound />,
+    errorElement: <NotFound />,
     children: [
       {
         path: "/",
@@ -61,6 +62,14 @@ const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <FeaturedBlogs />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/wishlist",
+        element: (
+          <PrivetRoute>
+            <Wishlist />
           </PrivetRoute>
         ),
       },

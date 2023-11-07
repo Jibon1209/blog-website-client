@@ -22,9 +22,8 @@ const SignUp = () => {
     const photo = form.get("photo");
     const email = form.get("email");
     const password = form.get("password");
-    console.log(name, photo, email, password);
+
     if (password.length < 6) {
-      console.log(password.length);
       toast.error("Password must be at least 6 characters");
       return;
     } else if (!/[A-Z]/.test(password)) {
@@ -48,7 +47,6 @@ const SignUp = () => {
         const createAt = result.user.metadata?.creationTime;
         const userinfo = { name, email, password, photo, createdAt: createAt };
         axios.post(`${BASE_URL}/users`, userinfo).then((res) => {
-          console.log(res.data);
           if (res.data.insertedId) {
             toast.success("Sign Up successfully");
           }
@@ -75,7 +73,6 @@ const SignUp = () => {
           lastLoggedAt,
         };
         axios.patch(`${BASE_URL}/users`, userinfo).then((res) => {
-          console.log(res.data);
           if (res.data.acknowledged) {
             toast.success("Sign In successfully");
           }

@@ -29,7 +29,6 @@ const FeaturedBlogs = () => {
     return wordCountB - wordCountA;
   });
   const topPosts = sortedBlogPosts.slice(0, 10);
-  console.log(topPosts);
 
   return (
     <div className="px-4 mt-20 mb-40">
