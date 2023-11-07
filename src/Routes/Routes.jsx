@@ -10,6 +10,7 @@ import AllBlogs from "../Components/AllBlogs/AllBlogs";
 import BlogDetails from "../Components/LatestBlog/BlogDetails";
 import { BASE_URL } from "../Components/utils/utils";
 import UpdateBlogs from "../Components/Add Blog/UpdateBlogs";
+import FeaturedBlogs from "../Components/FeaturedBlogs/FeaturedBlogs";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,14 @@ const router = createBrowserRouter([
           </PrivetRoute>
         ),
         loader: ({ params }) => fetch(`${BASE_URL}/blogs/${params.id}`),
+      },
+      {
+        path: "/featuredBlogs",
+        element: (
+          <PrivetRoute>
+            <FeaturedBlogs />
+          </PrivetRoute>
+        ),
       },
     ],
   },

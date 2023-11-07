@@ -1,5 +1,5 @@
 import { Button, Label, Spinner, Textarea } from "flowbite-react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 import axios from "axios";
@@ -17,15 +17,15 @@ const BlogDetails = () => {
   const { _id, title, image, shortDescription, longDescription, author } =
     useLoaderData();
 
+  const [commentText, setCommentText] = useState("");
+
   const resetForm = () => {
     document.getElementById("commentForm").reset();
   };
   const handleComment = (e) => {
     e.preventDefault();
-    const form = new FormData(e.currentTarget);
     const blogId = _id;
-    const comment = form.get("comment");
-    const newComment = { blogId, userName, userPhoto, comment };
+    const newComment = { blogId, userName, userPhoto, comment: commentText };
     axios.post(`${BASE_URL}/comments`, newComment).then((res) => {
       if (res.data.insertedId) {
         toast.success("Comment successfully");
@@ -45,6 +45,7 @@ const BlogDetails = () => {
       return res.data;
     },
   });
+
   if (isLoading) {
     return <Spinner color="info" aria-label="Info spinner example" />;
   }
@@ -97,6 +98,7 @@ const BlogDetails = () => {
                 placeholder="Leave a comment..."
                 required
                 rows={4}
+                onChange={(e) => setCommentText(e.target.value)}
               />
             </div>
             <div className="mt-2">
@@ -111,8 +113,8 @@ const BlogDetails = () => {
         )}
       </div>
       <div className="mt-10 md:w-1/2 items-center mx-auto">
-        <h1 className="text-3xl font-semibold ml-2">Comments</h1>
-        <div className="flex flex-col rounded-xl mt-4 border-2 p-4 gap-4">
+        <h1 className="text-3xl font-semibold ml-2">Comments:</h1>
+        <div className="flex flex-col rounded-xl mt-4  p-4 gap-4">
           {comments.map((comment) => (
             <Comment key={comment._id} comment={comment}></Comment>
           ))}

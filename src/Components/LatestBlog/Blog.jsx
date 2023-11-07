@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const Blog = ({ blog }) => {
-  const { _id, title, image, shortDescription } = blog;
+  const { _id, title, image, category, shortDescription } = blog;
   return (
     <Card className="max-w-full mt-20" imgAlt="Blog Image" imgSrc={image}>
+      <h1 className="text-xl text-center font-bold tracking-tight text-gray-900 dark:text-white">
+        {category}
+      </h1>
       <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
         {title}
       </h5>

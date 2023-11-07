@@ -46,10 +46,17 @@ const SignIn = () => {
         const email = result.user.email;
         const photo = result.user?.photoURL;
         const createAt = result.user.metadata?.creationTime;
-        const userinfo = { name, email, photo, createdAt: createAt };
-        axios.post(`${BASE_URL}/users`, userinfo).then((res) => {
+        const lastLoggedAt = result.user.metadata?.lastSignInTime;
+        const userinfo = {
+          name,
+          email,
+          photo,
+          createdAt: createAt,
+          lastLoggedAt,
+        };
+        axios.patch(`${BASE_URL}/users`, userinfo).then((res) => {
           console.log(res.data);
-          if (res.data.insertedId) {
+          if (res.data.acknowledged) {
             toast.success("Sign In successfully");
           }
         });
