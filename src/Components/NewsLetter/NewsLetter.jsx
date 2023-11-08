@@ -14,16 +14,19 @@ const NewsLetter = () => {
     console.log(inView);
     if (inView) {
       animation.start({
-        x: 0,
+        rotate: 360,
+        scale: 1,
         transition: {
           type: "spring",
           duration: 1,
           bounce: 0.3,
+          stiffness: 260,
+          damping: 20,
         },
       });
     }
     if (!inView) {
-      animation.start({ x: "-100vw" });
+      animation.start({ scale: 0 });
     }
   }, [inView]);
 
