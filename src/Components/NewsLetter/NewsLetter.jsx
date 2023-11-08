@@ -1,7 +1,32 @@
 import { Button, Card, TextInput } from "flowbite-react";
 import { toast } from "react-toastify";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
 
 const NewsLetter = () => {
+  const { ref, inView } = useInView({
+    threshold: 0.2,
+  });
+  const animation = useAnimation();
+
+  useEffect(() => {
+    console.log(inView);
+    if (inView) {
+      animation.start({
+        x: 0,
+        transition: {
+          type: "spring",
+          duration: 1,
+          bounce: 0.3,
+        },
+      });
+    }
+    if (!inView) {
+      animation.start({ x: "-100vw" });
+    }
+  }, [inView, animation]);
+
   const resetForm = () => {
     document.getElementById("newsLetter").reset();
   };
@@ -17,29 +42,33 @@ const NewsLetter = () => {
   };
   return (
     <div className="mt-20">
-      <Card className="max-w-full bg-accentDark">
-        <h5 className="text-xl md:text-3xl lg:text-5xl font-bold tracking-tight text-center text-white dark:text-white">
-          Subscribe to Our Newsletter
-        </h5>
-        <form
-          id="newsLetter"
-          onSubmit={handleSubscribe}
-          className="flex md:flex-row flex-col justify-center items-center pt-8 gap-2"
-        >
-          <div className="w-[300px]">
-            <TextInput
-              id="email"
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              required
-            />
-          </div>
-          <Button type="submit" className="bg-accent hover:bg-accentDark">
-            Subscribe
-          </Button>
-        </form>
-      </Card>
+      <div ref={ref}>
+        <motion.div animate={{ animation }}>
+          <Card className="max-w-full bg-accentDark">
+            <h5 className="text-xl md:text-3xl lg:text-5xl font-bold tracking-tight text-center text-white dark:text-white">
+              Subscribe to Our Newsletter
+            </h5>
+            <form
+              id="newsLetter"
+              onSubmit={handleSubscribe}
+              className="flex md:flex-row flex-col justify-center items-center pt-8 gap-2"
+            >
+              <div className="w-[300px]">
+                <TextInput
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  required
+                />
+              </div>
+              <Button type="submit" className="bg-accent hover:bg-accentDark">
+                Subscribe
+              </Button>
+            </form>
+          </Card>
+        </motion.div>
+      </div>
     </div>
   );
 };
