@@ -26,7 +26,7 @@ const WishBlog = ({ blog, blogInfo, handleDelete }) => {
           onClick={() => handleDelete(blogId)}
           className="bg-accent hover:bg-accentDark font-bold"
         >
-          Wishlist
+          Remove
         </Button>
       </div>
     </Card>

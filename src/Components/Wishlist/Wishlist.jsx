@@ -16,10 +16,14 @@ const Wishlist = () => {
   const { isLoading, error } = useQuery({
     queryKey: ["wishlist", currentUser],
     queryFn: () =>
-      axios.get(`${BASE_URL}/wishlists?email=${currentUser}`).then((res) => {
-        setBlogs(res.data);
-        return res.data;
-      }),
+      axios
+        .get(`${BASE_URL}/wishlists?email=${currentUser}`, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          setBlogs(res.data);
+          return res.data;
+        }),
   });
 
   if (error) {
