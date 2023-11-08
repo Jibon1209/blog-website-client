@@ -7,6 +7,7 @@ import { BASE_URL } from "../utils/utils";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import Comment from "../Comment/Comment";
+import { PhotoView } from "react-photo-view";
 
 const BlogDetails = () => {
   const { user } = useContext(AuthContext);
@@ -58,11 +59,13 @@ const BlogDetails = () => {
       <h1 className="text-base px-4 md:text-3xl lg:text-4xl font-bold  text-center">
         {title}
       </h1>
-      <img
-        className="md:w-1/2 rounded-xl items-center mx-auto mt-10"
-        src={image}
-        alt=""
-      />
+      <PhotoView src={image}>
+        <img
+          className="md:w-1/2 rounded-xl items-center mx-auto mt-10"
+          src={image}
+          alt=""
+        />
+      </PhotoView>
       <div className="space-y-4 mt-10">
         <p className="lg:w-1/2 items-center mx-auto text-center">
           {shortDescription}
