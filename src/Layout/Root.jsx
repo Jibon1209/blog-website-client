@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import FooterN from "../Components/Footer/FooterN";
 import { PhotoProvider } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const queryClient = new QueryClient();
 

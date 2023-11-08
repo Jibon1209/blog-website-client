@@ -6,7 +6,6 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import axios from "axios";
 import { BASE_URL } from "../utils/utils";
 import { toast } from "react-toastify";
-import { PhotoView } from "react-photo-view";
 
 const Blog = ({ blog }) => {
   const { user } = useContext(AuthContext);
@@ -31,32 +30,30 @@ const Blog = ({ blog }) => {
     }
   };
   return (
-    <PhotoView src={image}>
-      <Card className="max-w-full mt-20" imgAlt="Blog Image" imgSrc={image}>
-        <h1 className="text-xl text-center font-bold tracking-tight text-gray-900 dark:text-white">
-          {category}
-        </h1>
-        <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          {title}
-        </h5>
-        <p className="font-normal text-gray-700 dark:text-gray-400">
-          {shortDescription}
-        </p>
-        <div className="flex justify-center items-center gap-6">
-          <Link to={`/blogDetails/${_id}`}>
-            <Button className="bg-accent hover:bg-accentDark font-bold">
-              Details
-            </Button>
-          </Link>
-          <Button
-            onClick={handleWishlist}
-            className="bg-accent hover:bg-accentDark font-bold"
-          >
-            Wishlist
+    <Card className="max-w-full mt-20" imgAlt="Blog Image" imgSrc={image}>
+      <h1 className="text-xl text-center font-bold tracking-tight text-gray-900 dark:text-white">
+        {category}
+      </h1>
+      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        {title}
+      </h5>
+      <p className="font-normal text-gray-700 dark:text-gray-400">
+        {shortDescription}
+      </p>
+      <div className="flex justify-center items-center gap-6">
+        <Link to={`/blogDetails/${_id}`}>
+          <Button className="bg-accent hover:bg-accentDark font-bold">
+            Details
           </Button>
-        </div>
-      </Card>
-    </PhotoView>
+        </Link>
+        <Button
+          onClick={handleWishlist}
+          className="bg-accent hover:bg-accentDark font-bold"
+        >
+          Wishlist
+        </Button>
+      </div>
+    </Card>
   );
 };
 Blog.propTypes = {

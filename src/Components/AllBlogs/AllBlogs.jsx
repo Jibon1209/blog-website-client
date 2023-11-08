@@ -3,9 +3,10 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { BASE_URL } from "../utils/utils";
-import { Button, Select, Spinner, TextInput } from "flowbite-react";
+import { Button, Select, TextInput } from "flowbite-react";
 import { toast } from "react-toastify";
 import Blog from "../LatestBlog/Blog";
+import SkeletonCard from "../Skeleton/SkeletonCard";
 
 const AllBlogs = () => {
   const { user } = useContext(AuthContext);
@@ -36,9 +37,6 @@ const AllBlogs = () => {
       return blogsRes.data;
     },
   });
-  if (isLoading) {
-    return <Spinner color="info" aria-label="Info spinner example" />;
-  }
   if (error) {
     return toast.error(`Something went wrong with ${error.message}`);
   }
@@ -150,9 +148,11 @@ const AllBlogs = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {blogs.map((blog) => (
-          <Blog key={blog._id} blog={blog}></Blog>
-        ))}
+        {isLoading
+          ? Array(6)
+              .fill(0)
+              .map((d, i) => <SkeletonCard key={i} />)
+          : blogs.map((blog) => <Blog key={blog._id} blog={blog}></Blog>)}
       </div>
       <div>
         <div className="flex overflow-x-auto justify-center mt-10 gap-4">

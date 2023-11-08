@@ -1,6 +1,6 @@
 import { Card } from "flowbite-react";
 import avatarPic from "../../assets/avatar.jpg";
-
+import PropTypes from "prop-types";
 const Writer = ({ writer }) => {
   const { name } = writer;
   return (
@@ -21,5 +21,7 @@ const Writer = ({ writer }) => {
     </Card>
   );
 };
-
+Writer.propTypes = {
+  writer: PropTypes.object.isRequired,
+};
 export default Writer;

@@ -3,10 +3,10 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { BASE_URL } from "../utils/utils";
-import { Spinner } from "flowbite-react";
 import { toast } from "react-toastify";
 import WishBlog from "./WishBlog";
 import { useState } from "react";
+import SkeletonCard from "../Skeleton/SkeletonCard";
 
 const Wishlist = () => {
   const { user } = useContext(AuthContext);
@@ -22,9 +22,6 @@ const Wishlist = () => {
       }),
   });
 
-  if (isLoading) {
-    return <Spinner color="info" aria-label="Info spinner example" />;
-  }
   if (error) {
     return toast.error(`Something went wrong with ${error.message}`);
   }
@@ -43,14 +40,18 @@ const Wishlist = () => {
         Wishlist
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {blogs.map((blog) => (
-          <WishBlog
-            key={blog._id}
-            blog={blog}
-            blogInfo={blog.blogsInfo[0]}
-            handleDelete={handleDelete}
-          ></WishBlog>
-        ))}
+        {isLoading
+          ? Array(6)
+              .fill(0)
+              .map((d, i) => <SkeletonCard key={i} />)
+          : blogs.map((blog) => (
+              <WishBlog
+                key={blog._id}
+                blog={blog}
+                blogInfo={blog.blogsInfo[0]}
+                handleDelete={handleDelete}
+              ></WishBlog>
+            ))}
       </div>
     </div>
   );

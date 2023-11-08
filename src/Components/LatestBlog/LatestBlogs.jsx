@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Spinner } from "flowbite-react";
 import { BASE_URL } from "../utils/utils";
 import { toast } from "react-toastify";
 import Blog from "./Blog";
+import SkeletonCard from "../Skeleton/SkeletonCard";
 
 const LatestBlogs = () => {
   const {
@@ -17,9 +17,6 @@ const LatestBlogs = () => {
         return res.data;
       }),
   });
-  if (isLoading) {
-    return <Spinner color="info" aria-label="Info spinner example" />;
-  }
   if (error) {
     return toast.error(`Something went wrong with ${error.message}`);
   }
@@ -29,9 +26,11 @@ const LatestBlogs = () => {
         Latest Blogs
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {blogs.map((blog) => (
-          <Blog key={blog._id} blog={blog}></Blog>
-        ))}
+        {isLoading
+          ? Array(6)
+              .fill(0)
+              .map((d, i) => <SkeletonCard key={i} />)
+          : blogs.map((blog) => <Blog key={blog._id} blog={blog}></Blog>)}
       </div>
     </div>
   );

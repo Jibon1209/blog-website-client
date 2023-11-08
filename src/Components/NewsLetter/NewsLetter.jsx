@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 const NewsLetter = () => {
   const { ref, inView } = useInView({
-    threshold: 0.2,
+    threshold: 1,
   });
   const animation = useAnimation();
 
@@ -25,7 +25,7 @@ const NewsLetter = () => {
     if (!inView) {
       animation.start({ x: "-100vw" });
     }
-  }, [inView, animation]);
+  }, [inView]);
 
   const resetForm = () => {
     document.getElementById("newsLetter").reset();
@@ -43,7 +43,7 @@ const NewsLetter = () => {
   return (
     <div className="mt-20">
       <div ref={ref}>
-        <motion.div animate={{ animation }}>
+        <motion.div animate={animation}>
           <Card className="max-w-full bg-accentDark">
             <h5 className="text-xl md:text-3xl lg:text-5xl font-bold tracking-tight text-center text-white dark:text-white">
               Subscribe to Our Newsletter
