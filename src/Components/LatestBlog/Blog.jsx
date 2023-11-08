@@ -12,7 +12,7 @@ import { useEffect } from "react";
 
 const Blog = ({ blog }) => {
   const { ref, inView } = useInView({
-    threshold: 0.5,
+    threshold: 0.15,
   });
   const animation = useAnimation();
   const { user } = useContext(AuthContext);
@@ -56,11 +56,7 @@ const Blog = ({ blog }) => {
     }
   }, [inView]);
   return (
-    <Card
-      className="max-w-full max-h-full mt-20"
-      imgAlt="Blog Image"
-      imgSrc={image}
-    >
+    <Card className="max-w-full  mt-20" imgAlt="Blog Image" imgSrc={image}>
       <div ref={ref}>
         <motion.div animate={animation}>
           <h1 className="text-xl text-center font-bold tracking-tight text-gray-900 dark:text-white">
