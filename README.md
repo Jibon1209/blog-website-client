@@ -2,7 +2,7 @@
 
 Welcome to BLOGTREKKER, a comprehensive blog website project that leverages the power of modern web development technologies to create a feature-rich platform for blogging and content sharing. The project combines React, Firebase, React Router, Node, Express, and MongoDB to build an engaging and dynamic website.
 
-# website Live Link: (https://blog-website-client.web.app/)
+# website Live Link: (https://blog-website-client.web.app)
 
 # Server site Live Link: (https://blog-website-server-production.up.railway.app)
 
